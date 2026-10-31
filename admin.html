@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>پنل ادمین گیم‌استور</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
 body{margin:0;background:#06122b;color:#eef6ff;font-family:Tahoma,sans-serif;line-height:1.7}
 .wrap{max-width:1000px;margin:auto;padding:16px}
@@ -15,7 +15,6 @@ input,textarea,select{background:#06122b;color:#eef6ff;border:1px solid #1e3a6e;
 button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;margin:2px;font-family:inherit}
 button.g{background:transparent;border:1px solid #1e3a6e}
 .hidden{display:none!important}
-.tabs{margin-bottom:10px}
 .chatlay{display:grid;grid-template-columns:1fr 2fr;gap:10px}
 @media(max-width:700px){.chatlay{grid-template-columns:1fr}}
 .item{display:flex;gap:8px;align-items:center;padding:8px;border-bottom:1px solid #1e3a6e;cursor:pointer}
@@ -35,19 +34,19 @@ small{color:#93b4e0;display:block}
 <a href="index.html" style="color:#60a5fa;text-decoration:none;display:inline-block;margin-bottom:10px">← بازگشت به سایت (حالت مشتری)</a>
 
 <div id="login" class="box" style="max-width:380px">
-  <label>ایمیل ادمین</label><input id="em" type="email" style="width:100%">
-  <label>رمز</label><input id="pw" type="password" style="width:100%">
-  <button onclick="login()">ورود</button>
-  <div id="lerr" style="color:#f87171"></div>
+  <p>برای ورود، با ایمیلی که دعوت شدی وارد شو.</p>
+  <button onclick="netlifyIdentity.open('login')">ورود</button>
 </div>
 
 <div id="app" class="hidden">
-  <div class="tabs">
+  <div style="margin-bottom:10px">
     <button onclick="tab('chat')">چت</button>
     <button onclick="tab('prices')">قیمت‌ها</button>
     <button onclick="tab('offers')">آفرها</button>
+    <button onclick="tab('rules')">قوانین</button>
     <button onclick="tab('tickets')">تیکت‌ها</button>
-    <button class="g" onclick="logout()">خروج</button>
+    <button class="g" onclick="netlifyIdentity.logout()">خروج</button>
+    <span id="onlineCount" style="margin-right:10px"></span>
   </div>
 
   <div id="t-chat" class="box chatlay">
@@ -67,7 +66,7 @@ small{color:#93b4e0;display:block}
     <div class="row2">
       <input id="np_cp" placeholder="سی‌پی" size="6">
       <input id="np_price" placeholder="قیمت (تومان)" size="10">
-      <input id="np_tag" placeholder="برچسب" size="12">
+      <input id="np_tag" placeholder="برچسب" size="14">
       <input id="np_disc" placeholder="تخفیف %" value="0" size="4">
       <button onclick="addPrice()">افزودن</button>
     </div>
@@ -84,74 +83,89 @@ small{color:#93b4e0;display:block}
     </div>
   </div>
 
+  <div id="t-rules" class="box hidden">
+    <textarea id="rules" rows="12" style="width:100%"></textarea>
+    <button onclick="saveRules()">ذخیره‌ی قوانین</button>
+  </div>
+
   <div id="t-tickets" class="box hidden"><div id="tickets"></div></div>
 </div>
 </div>
 
 <script>
-const sb = supabase.createClient('https://cyhjfojmxwsssqfqjlm.supabase.co', 'sb_publishable_JqsOBKa2ROBM2G0FbSNwFw_pS0DaNQV');
-let currentChat = null;
+const API = '/.netlify/functions/api';
+let S = null, token = null, currentChat = null, timer = null;
 const $ = id => document.getElementById(id);
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-async function boot(){
-  const { data } = await sb.auth.getSession();
-  if (data.session && !data.session.user.is_anonymous){
-    $('login').classList.add('hidden');
-    $('app').classList.remove('hidden');
-    tab('chat');
-    sb.channel('admin-live')
-      .on('postgres_changes', {event:'*', schema:'public', table:'messages'}, () => { loadChats(); if (currentChat) renderMsgs(); })
-      .on('postgres_changes', {event:'*', schema:'public', table:'presence'}, () => loadChats())
-      .subscribe();
-    setInterval(loadChats, 20000);
+async function api(action, data){
+  const r = await fetch(API + '?action=' + action, {
+    method: data ? 'POST' : 'GET',
+    headers: {'Content-Type':'application/json', 'Authorization': 'Bearer ' + token},
+    body: data ? JSON.stringify(data) : undefined
+  });
+  return r.json();
+}
+
+netlifyIdentity.on('init', u => { if (u) afterLogin(u); else $('login').classList.remove('hidden'); });
+netlifyIdentity.on('login', u => { netlifyIdentity.close(); afterLogin(u); });
+netlifyIdentity.on('logout', () => location.reload());
+netlifyIdentity.init();
+
+async function afterLogin(u){
+  const roles = (u.app_metadata && u.app_metadata.roles) || [];
+  if (!roles.includes('admin')){
+    alert('این حساب دسترسی ادمین نداره.');
+    netlifyIdentity.logout();
+    return;
   }
+  token = await u.jwt();
+  $('login').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  tab('chat');
+  loadAll();
+  timer = setInterval(loadAll, 10000);
 }
-async function login(){
-  const { error } = await sb.auth.signInWithPassword({ email: $('em').value, password: $('pw').value });
-  if (error){ $('lerr').textContent = 'ورود ناموفق: ' + error.message; return; }
-  location.reload();
+
+async function loadAll(){
+  const d = await api('admin_data');
+  if (d.error){ $('login').classList.remove('hidden'); $('app').classList.add('hidden'); return; }
+  S = d.state;
+  $('onlineCount').textContent = 'آنلاین: ' + d.online.length;
+  renderChats(d.chats, d.online);
+  renderTickets(d.tickets);
+  if (!$('t-prices').classList.contains('hidden')) renderPrices();
+  if (!$('t-offers').classList.contains('hidden')) renderOffers();
+  if (!$('t-rules').classList.contains('hidden') && document.activeElement !== $('rules')) $('rules').value = S.rules || '';
+  if (currentChat) renderMsgs();
 }
-async function logout(){ await sb.auth.signOut(); location.reload(); }
 
 function tab(n){
-  ['chat','prices','offers','tickets'].forEach(x => $('t-'+x).classList.toggle('hidden', x !== n));
-  if (n==='chat') loadChats();
-  if (n==='prices') loadPrices();
-  if (n==='offers') loadOffers();
-  if (n==='tickets') loadTickets();
+  ['chat','prices','offers','rules','tickets'].forEach(x => $('t-'+x).classList.toggle('hidden', x !== n));
+  if (n==='prices') renderPrices();
+  if (n==='offers') renderOffers();
+  if (n==='rules') $('rules').value = S ? (S.rules||'') : '';
 }
 
 /* ---------- چت ---------- */
-async function loadChats(){
-  const [m, p] = await Promise.all([
-    sb.from('messages').select('chat_id,sender,body,created_at').order('created_at', {ascending:false}).limit(1000),
-    sb.from('presence').select('id,last_seen')
-  ]);
-  const online = new Set((p.data||[]).filter(x => Date.now() - new Date(x.last_seen).getTime() < 70000).map(x => x.id));
-  const last = {};
-  (m.data||[]).forEach(x => { if (!last[x.chat_id]) last[x.chat_id] = x; });
-  const ids = [...new Set([...Object.keys(last), ...online])];
-  $('chatList').innerHTML = ids.length ? ids.map(id => {
-    const x = last[id];
-    return `<div class="item ${id===currentChat?'on':''}" onclick="openChat('${id}')">
-      <span class="dot ${online.has(id)?'on':''}"></span>
-      <div><b>مشتری ${esc(id.slice(0,6))}</b><small>${x ? esc(x.body).slice(0,40) : 'بدون پیام'}</small></div></div>`;
-  }).join('') : '<p>هنوز گفتگویی نیست.</p>';
+function renderChats(ids, online){
+  $('chatList').innerHTML = ids.length ? ids.map(id =>
+    `<div class="item ${id===currentChat?'on':''}" onclick="openChat('${id}')">
+      <span class="dot ${online.includes(id)?'on':''}"></span>
+      <div><b>مشتری ${esc(id.slice(0,6))}</b></div></div>`).join('') : '<p>هنوز گفتگویی نیست.</p>';
 }
-function openChat(id){ currentChat = id; loadChats(); renderMsgs(); }
+function openChat(id){ currentChat = id; renderMsgs(); }
 async function renderMsgs(){
-  if (!currentChat) return;
-  const { data } = await sb.from('messages').select('sender,body,created_at').eq('chat_id', currentChat).order('created_at');
-  $('msgs').innerHTML = (data||[]).map(x => `<div class="b ${x.sender==='admin'?'me':''}">${esc(x.body)}</div>`).join('');
+  const d = await api('admin_chat', {id: currentChat});
+  $('msgs').innerHTML = (d.messages||[]).map(m => `<div class="b ${m.sender==='admin'?'me':''}">${esc(m.body)}</div>`).join('');
   $('msgs').scrollTop = 1e9;
 }
 async function sendMsg(){
   const v = $('reply').value.trim();
   if (!v || !currentChat) return;
-  await sb.from('messages').insert({ chat_id: currentChat, sender: 'admin', body: v });
   $('reply').value = '';
-  renderMsgs(); loadChats();
+  await api('admin_reply', {id: currentChat, text: v});
+  renderMsgs();
 }
 
 /* ---------- قیمت‌ها ---------- */
@@ -160,72 +174,75 @@ function rowVals(el){
   el.querySelectorAll('[data-f]').forEach(i => { o[i.dataset.f] = i.type==='checkbox' ? i.checked : i.value; });
   return o;
 }
-async function loadPrices(){
-  const { data, error } = await sb.from('prices').select('*').order('cp');
-  if (error){ $('prices').textContent = error.message; return; }
-  $('prices').innerHTML = (data||[]).map(r => `
-    <div class="row2" data-id="${r.id}">
+function renderPrices(){
+  if (!S) return;
+  $('prices').innerHTML = S.prices.map((r,i) => `
+    <div class="row2" data-i="${i}">
       <input data-f="cp" value="${r.cp}" size="6">
       <input data-f="price" value="${r.price}" size="10">
-      <input data-f="tag" value="${esc(r.tag)}" size="12">
+      <input data-f="tag" value="${esc(r.tag)}" size="14">
       <input data-f="discount" value="${r.discount||0}" size="4"> %
-      <label><input type="checkbox" data-f="active" ${r.active?'checked':''}> فعال</label>
-      <button onclick="savePrice(this)">ذخیره</button>
-      <button class="g" onclick="delPrice(${r.id})">حذف</button>
+      <label><input type="checkbox" data-f="active" ${r.active!==false?'checked':''}> فعال</label>
+      <button onclick="savePriceRow(this)">ذخیره</button>
+      <button class="g" onclick="delPrice(${i})">حذف</button>
     </div>`).join('') || '<p>بسته‌ای نیست.</p>';
 }
-async function savePrice(btn){
+async function savePriceRow(btn){
   const row = btn.closest('.row2'); const v = rowVals(row);
-  await sb.from('prices').update({ cp:+v.cp, price:+v.price, tag:v.tag, discount:+v.discount||0, active:v.active }).eq('id', row.dataset.id);
-  loadPrices();
+  S.prices[+row.dataset.i] = { cp:+v.cp, price:+v.price, tag:v.tag, discount:+v.discount||0, active:v.active };
+  await saveState(); renderPrices();
 }
-async function delPrice(id){ if (!confirm('این بسته حذف شه؟')) return; await sb.from('prices').delete().eq('id', id); loadPrices(); }
+async function delPrice(i){ if (!confirm('این بسته حذف شه؟')) return; S.prices.splice(i,1); await saveState(); renderPrices(); }
 async function addPrice(){
-  await sb.from('prices').insert({ cp:+$('np_cp').value, price:+$('np_price').value, tag:$('np_tag').value, discount:+$('np_disc').value||0, active:true });
-  loadPrices();
+  S.prices.push({ cp:+$('np_cp').value, price:+$('np_price').value, tag:$('np_tag').value, discount:+$('np_disc').value||0, active:true });
+  await saveState(); renderPrices();
 }
 
 /* ---------- آفرها ---------- */
-async function loadOffers(){
-  const { data } = await sb.from('offers').select('*').order('id');
-  $('offers').innerHTML = (data||[]).map(o => `
-    <div class="row2" data-id="${o.id}">
+function renderOffers(){
+  if (!S) return;
+  $('offers').innerHTML = S.offers.map((o,i) => `
+    <div class="row2" data-i="${i}">
       <input data-f="title" value="${esc(o.title)}" size="20">
       <input data-f="description" value="${esc(o.description)}" size="25">
       <input data-f="price" value="${o.price||''}" size="10">
-      <label><input type="checkbox" data-f="active" ${o.active?'checked':''}> فعال</label>
-      <button onclick="saveOffer(this)">ذخیره</button>
-      <button class="g" onclick="delOffer(${o.id})">حذف</button>
+      <label><input type="checkbox" data-f="active" ${o.active!==false?'checked':''}> فعال</label>
+      <button onclick="saveOfferRow(this)">ذخیره</button>
+      <button class="g" onclick="delOffer(${i})">حذف</button>
     </div>`).join('') || '<p>آفری نیست.</p>';
 }
-async function saveOffer(btn){
+async function saveOfferRow(btn){
   const row = btn.closest('.row2'); const v = rowVals(row);
-  await sb.from('offers').update({ title:v.title, description:v.description, price:+v.price||null, active:v.active }).eq('id', row.dataset.id);
-  loadOffers();
+  S.offers[+row.dataset.i] = { title:v.title, description:v.description, price:+v.price||null, active:v.active };
+  await saveState(); renderOffers();
 }
-async function delOffer(id){ if (!confirm('این آفر حذف شه؟')) return; await sb.from('offers').delete().eq('id', id); loadOffers(); }
+async function delOffer(i){ if (!confirm('این آفر حذف شه؟')) return; S.offers.splice(i,1); await saveState(); renderOffers(); }
 async function addOffer(){
-  await sb.from('offers').insert({ title:$('no_title').value, description:$('no_desc').value, price:+$('no_price').value||null, active:true });
-  loadOffers();
+  S.offers.push({ title:$('no_title').value, description:$('no_desc').value, price:+$('no_price').value||null, active:true });
+  await saveState(); renderOffers();
+}
+
+/* ---------- قوانین ---------- */
+async function saveRules(){ S.rules = $('rules').value; await saveState(); alert('قوانین ذخیره شد'); }
+
+async function saveState(){
+  await api('admin_save', {state: S});
 }
 
 /* ---------- تیکت‌ها ---------- */
-async function loadTickets(){
-  const { data } = await sb.from('tickets').select('*').order('created_at', {ascending:false});
-  $('tickets').innerHTML = (data||[]).map(t => `
+function renderTickets(list){
+  $('tickets').innerHTML = (list||[]).map(t => `
     <div class="row2">
       <b>${esc(t.name||'بدون نام')}</b>
-      <small>${new Date(t.created_at).toLocaleString('fa-IR')}</small>
+      <small>${new Date(t.at).toLocaleString('fa-IR')}</small>
       <div style="width:100%">${esc(t.message)}</div>
-      <select onchange="setStatus(${t.id}, this.value)">
-        <option value="new" ${t.status==='new'?'selected':''}>جدید</option>
+      <select onchange="setStatus('${t.id}', this.value)">
+        <option value="new" ${t.status!=='done'?'selected':''}>جدید</option>
         <option value="done" ${t.status==='done'?'selected':''}>انجام شد</option>
       </select>
     </div>`).join('') || '<p>تیکتی نیست.</p>';
 }
-async function setStatus(id, s){ await sb.from('tickets').update({ status:s }).eq('id', id); }
-
-boot();
+async function setStatus(id, s){ await api('admin_ticket', {id, status:s}); }
 </script>
 </body>
 </html>
