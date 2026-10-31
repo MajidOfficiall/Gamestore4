@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563eb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GameStore">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>گیم‌استور | فروش سی‌پی</title>
+<meta name="description" content="خرید سی‌پی کالاف دیوتی موبایل با تحویل سریع.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ac:#2563eb;--ac2:#60a5fa;--bg:#06122b;--card:#0f2347;--tx:#eef6ff;--mu:#93b4e0;--bd:#1e3a6e;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{--bg:#eef6ff;--card:#ffffff;--tx:#0b2a5b;--mu:#4a6a94;--bd:#cfe1fa;color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Vazirmatn',Tahoma,Arial,sans-serif;line-height:1.8;min-height:100vh;transition:background .4s,color .4s}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font-family:inherit}
+.wrap{max-width:1100px;margin:auto;padding:0 16px}
+
+/* ---------- انیمیشن ---------- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.45)}50%{box-shadow:0 0 0 10px rgba(37,99,235,0)}}
+@keyframes shine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes slideIn{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.page{display:none}
+.page.active{display:block;animation:fadeUp .5s ease both}
+.card{animation:fadeUp .5s ease both;animation-delay:var(--d,0s)}
+.card:hover{transform:translateY(-4px);border-color:var(--ac);box-shadow:0 10px 26px rgba(37,99,235,.18)}
+.card{transition:transform .25s,border-color .25s,box-shadow .25s}
+h1 span.shine{background:linear-gradient(90deg,var(--ac),#bfdbfe,var(--ac));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+.logo{animation:float 4s ease-in-out infinite;display:inline-block}
+.btn{transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.97)}
+.btn.pulse{animation:glow 2.2s infinite}
+.toast{position:fixed;bottom:18px;inset-inline:16px;max-width:420px;margin-inline:auto;background:var(--card);border:1px solid var(--ac);border-radius:14px;padding:14px 16px;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:slideIn .45s ease both}
+.toast.out{opacity:0;transition:opacity .4s}
+html.noanim *,html.noanim *::before,html.noanim *::after{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){html:not(.anim-on) *{animation:none!important;transition:none!important}}
+
+/* ---------- ظاهر ---------- */
+header.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--bd);backdrop-filter:blur(6px)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.brand{font-weight:900;font-size:1.2rem;color:var(--ac)}
+nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+nav button{background:none;border:0;color:var(--mu);font-size:.92rem;cursor:pointer;padding:6px 8px;border-radius:8px;transition:.2s}
+nav button:hover,nav button.on{color:var(--ac);background:rgba(37,99,235,.08)}
+.iconbtn{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;padding:5px 10px;cursor:pointer;font-size:.9rem}
+.hero{text-align:center;padding:50px 16px 36px;background:radial-gradient(600px 260px at 50% 0,rgba(37,99,235,.35),transparent)}
+h1{font-size:clamp(1.7rem,6vw,2.8rem);line-height:1.5;margin:0 0 10px;font-weight:900}
+.hero p{color:var(--mu);max-width:560px;margin:0 auto 20px}
+.btn{display:inline-block;padding:11px 22px;border-radius:12px;font-weight:700;background:var(--ac);color:#fff;border:0;cursor:pointer;font-size:1rem;box-shadow:0 6px 20px rgba(37,99,235,.35)}
+.btn:hover{background:var(--ac2)}
+.btn.ghost{background:transparent;border:1px solid var(--bd);color:var(--tx);box-shadow:none}
+.btn.small{padding:7px 14px;font-size:.9rem;border-radius:10px}
+.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+section.wrap{padding-top:28px;padding-bottom:8px}
+h2{font-size:1.35rem;margin:0 0 14px;border-inline-start:4px solid var(--ac);padding-inline-start:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.card .big{font-size:1.5rem;font-weight:900;color:var(--ac)}
+.card small{color:var(--mu)}
+.price{font-weight:700;margin-top:auto}
+.note{color:var(--mu);font-size:.85rem;margin:-6px 0 12px}
+input,textarea,select{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:.95rem}
+label{display:block;color:var(--mu);font-size:.9rem;margin-bottom:4px}
+.box{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;max-width:560px;animation:fadeUp .5s ease both}
+.avatar{width:84px;height:84px;border-radius:50%;object-fit:cover;background:var(--bd);display:block;margin-bottom:10px}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.hidden{display:none!important}
+.ok{font-size:.9rem;min-height:1.4em;color:#22c55e}
+.err{color:#ef4444}
+.notice{border-inline-start:3px solid var(--ac);background:var(--card);border-radius:12px;padding:12px 14px;margin-bottom:10px;animation:fadeUp .4s ease both}
+.notice small{color:var(--mu)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+details{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 16px;margin-bottom:8px}
+summary{cursor:pointer;font-weight:700}
+details p{color:var(--mu);margin:8px 0 0}
+details[open]{border-color:var(--ac)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.open{display:flex}
+.modal .box{max-width:460px;width:100%;animation:slideIn .4s ease both}
+.msg{background:var(--bg);border:1px dashed var(--bd);border-radius:10px;padding:10px;margin-bottom:12px;font-size:.92rem;white-space:pre-line}
+.chatbtn{position:fixed;bottom:18px;left:16px;z-index:40;box-shadow:0 8px 24px rgba(37,99,235,.4)}
+.chatwin{position:fixed;bottom:76px;left:16px;width:min(340px,calc(100% - 32px));height:440px;background:var(--card);border:1px solid var(--ac);border-radius:16px;display:none;flex-direction:column;z-index:45;box-shadow:0 12px 34px rgba(0,0,0,.45);animation:slideIn .4s ease both;overflow:hidden}
+.chatwin.open{display:flex}
+.chathead{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--bd)}
+.msgs{flex:1;overflow-y:auto;padding:10px}
+.b{background:var(--bg);border:1px solid var(--bd);padding:8px 12px;border-radius:12px;margin:6px 0;max-width:90%;white-space:pre-line;font-size:.92rem}
+.b.u{background:var(--ac);color:#fff;border-color:var(--ac);margin-inline-start:auto}
+.qs{display:flex;gap:6px;flex-wrap:wrap;padding:8px 10px;border-top:1px solid var(--bd)}
+.qs button{border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:99px;padding:4px 10px;cursor:pointer;font-size:.82rem}
+.qs button:hover{border-color:var(--ac);color:var(--ac)}
+.cin{display:flex;gap:6px;padding:8px 10px;border-top:1px solid var(--bd)}
+.cin input{margin:0}
+.gametiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.gametile{height:130px;border-radius:18px;display:flex;align-items:flex-end;padding:14px;color:#fff;font-weight:900;font-size:1.1rem;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.35);transition:transform .25s;animation:fadeUp .5s ease both;animation-delay:var(--d,0s);text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.gametile:hover{transform:translateY(-5px) scale(1.02)}
+.cartrow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--bd)}
+.qty button{border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:8px;width:30px;height:30px;cursor:pointer}
+.old{text-decoration:line-through;color:var(--mu);font-size:.85rem;margin-inline-end:6px}
+.badge{color:var(--ac);font-size:.85rem}
+
+.coin-wrap{display:flex;flex-direction:column;align-items:center;margin:18px 0 6px}
+.coin{width:150px;height:150px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:2.4rem;color:#fff;background:radial-gradient(circle at 35% 30%,#dbeafe,#3b82f6 45%,#1e3a8a 100%);box-shadow:0 0 0 6px rgba(191,219,254,.35),0 14px 40px rgba(37,99,235,.55);cursor:pointer;user-select:none;animation:spin 4s linear infinite;transition:box-shadow .3s}
+.coin.fast{animation-duration:.45s;box-shadow:0 0 0 10px rgba(191,219,254,.55),0 18px 60px rgba(96,165,250,.9)}
+@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+/* برف */
+#snow{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.flake{position:absolute;top:-10px;color:#e0f2fe;opacity:.9;animation:fall linear infinite;user-select:none}
+@keyframes fall{0%{transform:translateY(-10px) translateX(0)}50%{transform:translateY(50vh) translateX(20px)}100%{transform:translateY(105vh) translateX(-10px)}}
+header.top,.hero,section,footer,.page{position:relative;z-index:2}
+body{background:linear-gradient(180deg,#06122b 0%,#0b2a5b 100%)}
+:root:not([data-theme="dark"]) body,:root[data-theme="light"] body{background:linear-gradient(180deg,#eef6ff 0%,#dbeafe 100%)}
+.hero h1{text-shadow:0 0 22px rgba(96,165,250,.45)}
+.page.active h2{animation:slideR .6s ease both}
+@keyframes slideR{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.btn{box-shadow:0 6px 22px rgba(37,99,235,.45)}
+.card:hover .big{animation:pulseTxt 1s ease infinite}
+@keyframes pulseTxt{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.livebtn{position:fixed;bottom:18px;right:16px;z-index:40;box-shadow:0 8px 24px rgba(37,99,235,.45)}
+#liveWin{left:auto;right:16px}
+#liveWin .b.u{background:var(--ac);color:#fff;border-color:var(--ac);margin-inline-start:auto}
+
+/* ---------- برق ---------- */
+.bolt{font-size:9rem;line-height:1;cursor:pointer;user-select:none;color:#fde047;text-shadow:0 0 18px #facc15,0 0 40px #60a5fa;animation:flick 3s infinite}
+@keyframes flick{0%,88%,100%{filter:drop-shadow(0 0 12px #60a5fa);transform:scale(1)}90%{filter:drop-shadow(0 0 40px #fff);transform:scale(1.08)}92%{filter:drop-shadow(0 0 8px #60a5fa)}94%{filter:drop-shadow(0 0 40px #fff);transform:scale(1.04)}96%{filter:drop-shadow(0 0 12px #60a5fa);transform:scale(1)}}
+.bolt.zap{animation:zapshake .5s linear}
+@keyframes zapshake{0%{transform:translate(0) rotate(0)}15%{transform:translate(-6px,3px) rotate(-6deg)}30%{transform:translate(6px,-4px) rotate(6deg)}45%{transform:translate(-4px,4px) rotate(-3deg)}60%{transform:translate(4px,-2px) rotate(3deg)}80%{transform:translate(-2px,2px)}100%{transform:none}}
+#flash{position:fixed;inset:0;background:radial-gradient(circle,rgba(191,219,254,.6),rgba(37,99,235,.2));opacity:0;pointer-events:none;z-index:200;transition:opacity .07s}
+#flash.on{opacity:1}
+.spark{position:fixed;width:7px;height:7px;border-radius:50%;background:#fef9c3;box-shadow:0 0 12px #facc15,0 0 6px #60a5fa;pointer-events:none;z-index:201}
+
+/* ---------- حذف پیام به ادمین از پایین صفحه ---------- */
+#liveBtn,#liveWin{display:none!important}
+button[data-tab="ticket"],#tab-ticket{display:none!important}
+footer{text-align:center;color:var(--mu);padding:30px 16px;font-size:.88rem;border-top:1px solid var(--bd);margin-top:30px}
+footer div{margin:4px 0}
+
+#splash{position:fixed;inset:0;background:radial-gradient(circle at 50% 40%,#0b2a5b,#06122b 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .6s;padding:20px;text-align:center}
+#splash.gone{opacity:0;pointer-events:none}
+.sp-logo{font-size:64px;animation:float 2s ease-in-out infinite}
+.sp-name{font-size:2.2rem;font-weight:900;letter-spacing:4px;background:linear-gradient(90deg,#2563eb,#bfdbfe,#2563eb);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 3s linear infinite;margin:10px 0}
+.sp-bar{width:180px;height:4px;background:#1e3a6e;border-radius:4px;overflow:hidden}
+.sp-bar i{display:block;height:100%;width:40%;background:#2563eb;animation:load 1.2s ease-in-out infinite}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
+.sp-msg{color:#93b4e0;margin-top:14px;font-size:.95rem;max-width:300px}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+</head>
+<body>
+<div id="snow"></div>
+<div id="flash"></div>
+<div id="splash">
+<div class="sp-logo">🎮</div>
+<div class="sp-name">GAME STORE</div>
+<div class="sp-bar" id="spBar"><i></i></div>
+<div class="sp-msg" id="spMsg">در حال بارگذاری...</div>
+<button class="btn small hidden" id="spRetry" style="margin-top:14px">تلاش دوباره</button>
+</div>
+
+
+<header class="top">
+<div class="wrap">
+<a class="brand" href="#" data-page="home"><span class="logo">❄️🎮</span> <span data-i18n="brand"></span></a>
+<nav>
+<button data-page="home" data-i18n="nav_home"></button>
+<button data-page="categories">دسته‌بندی</button>
+<button data-page="cart">سبد خرید <span id="cartCount"></span></button>
+<button data-page="accounts">اکانت‌ها</button>
+<button data-page="notices" data-i18n="nav_notices"></button>
+<button data-page="profile" data-i18n="nav_profile"></button>
+<button data-page="settings" data-i18n="nav_settings"></button>
+<button data-page="about" data-i18n="nav_about"></button>
+<button class="iconbtn" id="themeBtn" aria-label="theme">🌓</button>
+<a class="iconbtn" href="admin.html" style="text-decoration:none">ورود ادمین</a>
+</nav>
+</div>
+</header>
+
+<!-- خانه -->
+<div class="page active" id="page-home">
+<div class="hero">
+<h1><span data-i18n="hero_a"></span><br><span class="shine" data-i18n="hero_b"></span></h1>
+<p data-i18n="hero_p"></p>
+<div class="coin-wrap"><div class="bolt" id="coin">⚡</div><p class="note" style="margin-top:10px">روی برق بزن!</p></div>
+<div class="cta">
+<button class="btn pulse" data-page="home" data-goto="cp" data-i18n="btn_view"></button>
+</div>
+</div>
+
+
+<section class="wrap">
+<h2 data-i18n="cp_title"></h2>
+<p class="note" data-i18n="cp_note"></p>
+<div class="grid" id="cpGrid"></div>
+</section>
+<section class="wrap" id="offersSec"><h2>آفرها</h2><div class="grid" id="offersGrid"></div></section>
+<section class="wrap">
+<h2 data-i18n="faq_title"></h2>
+<details><summary data-i18n="faq1_q"></summary><p data-i18n="faq1_a"></p></details>
+<details><summary data-i18n="faq2_q"></summary><p data-i18n="faq2_a"></p></details>
+</section>
+</div>
+
+<div class="page" id="page-categories"><section class="wrap"><h2>دسته‌بندی بازی‌ها</h2><div class="gametiles" id="gameGrid"></div></section></div>
+<div class="page" id="page-game"><section class="wrap"><h2 id="gameTitle"></h2><div id="gameBody"></div></section></div>
+<div class="page" id="page-cart"><section class="wrap"><h2>سبد خرید</h2><div class="box" id="cartBox"></div></section></div>
+<div class="page" id="page-publish"><section class="wrap"><h2>انتشار اکانت</h2><div class="box"><p style="font-size:1.3rem;font-weight:900;color:var(--ac)">بزودی</p><p class="note">این بخش به‌زودی فعال می‌شه.</p></div></section></div>
+<div class="page" id="page-accounts"><section class="wrap">
+<div class="row"><h2 style="margin:0">اکانت‌ها</h2><button class="btn" id="addAccBtn" style="font-size:1.4rem;padding:2px 16px">+</button></div>
+<div class="grid" id="accGrid"></div>
+</section>
+<div class="modal" id="accModal"><div class="box">
+<h2 style="margin-top:0">افزودن اکانت</h2>
+<label>عکس اکانت</label><input type="file" accept="image/*" id="accPhoto">
+<label>نام اکانت</label><input id="accName" maxlength="60">
+<label>بازی</label><select id="accGame"><option>Call of Duty Mobile</option><option>Free Fire Mobile</option><option>PUBG Mobile</option><option>Call of Duty Warzone</option><option>Counter-Strike 2</option></select>
+<label>مشخصات (لول، اسکین‌ها، رنک و ...)</label><textarea id="accSpecs" rows="4" maxlength="400"></textarea>
+<label>قیمت (تومان، فقط عدد)</label><input id="accPrice" inputmode="numeric">
+<p class="note">رمز یا ایمیل اکانت رو اینجا ننویس.</p>
+<div class="cta"><button class="btn" id="accPublish">انتشار</button><button class="btn ghost" id="accCancel">انصراف</button></div>
+<div class="ok err" id="accErr"></div>
+</div></div>
+</div>
+<!-- نوتیس -->
+<div class="page" id="page-notices">
+<section class="wrap">
+<h2 data-i18n="notices_title"></h2>
+<div id="noticeList"></div>
+</section>
+</div>
+
+<!-- پروفایل -->
+<div class="page" id="page-profile">
+<section class="wrap">
+<h2 data-i18n="profile_title"></h2>
+<div class="box" id="profileBox"></div>
+</section>
+</div>
+
+<!-- تنظیمات -->
+<div class="page" id="page-settings">
+<section class="wrap">
+<h2 data-i18n="settings_title"></h2>
+<div class="box">
+<label data-i18n="lang_label"></label>
+<select id="langSel"></select>
+<label data-i18n="theme_label"></label>
+<select id="themeSel">
+<option value="dark" data-i18n="dark"></option>
+<option value="light" data-i18n="light"></option>
+</select>
+<label data-i18n="accent_label"></label>
+<input type="color" id="accentInp" value="#2563eb" style="height:44px;padding:4px">
+<label data-i18n="anim_label"></label>
+<select id="animSel">
+<option value="on" data-i18n="on"></option>
+<option value="off" data-i18n="off"></option>
+</select>
+</div>
+</section>
+</div>
+
+<!-- درباره ما -->
+<div class="page" id="page-about">
+<section class="wrap">
+<h2 data-i18n="about_title"></h2>
+<div class="tabs">
+<button class="btn small" data-tab="problem" data-i18n="tab_problem"></button>
+<button class="btn small" data-tab="complaint" data-i18n="tab_complaint"></button>
+<button class="btn small" data-tab="ticket">تیکت</button>
+<button class="btn small" data-tab="support" data-i18n="tab_support"></button>
+</div>
+<div class="box hidden" id="tab-problem">
+<textarea id="problemText" rows="4" data-i18n-ph="problem_ph"></textarea>
+<button class="btn small" data-send="problemText" data-i18n="send"></button>
+<div class="ok" id="ok-problemText"></div>
+</div>
+<div class="box hidden" id="tab-complaint">
+<textarea id="complaintText" rows="4" data-i18n-ph="complaint_ph"></textarea>
+<button class="btn small" data-send="complaintText" data-i18n="send"></button>
+<div class="ok" id="ok-complaintText"></div>
+</div>
+<div class="box hidden" id="tab-ticket">
+<form name="ticket" method="POST" data-netlify="true" id="ticketForm">
+<input type="hidden" name="form-name" value="ticket">
+<label>نوع پیام</label>
+<select name="type"><option>سوال درباره سی‌پی</option><option>شکایت</option><option>مشکل سایت</option><option>پیگیری سفارش</option></select>
+<label>نام یا آیدی تلگرام شما (اختیاری)</label>
+<input name="contact" maxlength="60">
+<label>متن پیام</label>
+<textarea name="message" rows="4" required></textarea>
+<button class="btn small" type="submit">ارسال تیکت</button>
+<div class="ok" id="ok-ticket"></div>
+</form>
+</div>
+<div class="box hidden" id="tab-support">
+<h3 style="margin-top:0">چت با ادمین</h3><form name="ticket2" method="POST" data-netlify="true" id="ticketForm2"><input type="hidden" name="form-name" value="ticket2"><label>نوع پیام</label><select name="type"><option>سوال درباره سی‌پی</option><option>شکایت</option><option>مشکل سایت</option><option>پیگیری سفارش</option></select><label>اسم یا آیدی تلگرام (اختیاری)</label><input name="contact" maxlength="60"><label>متن پیام</label><textarea name="message" rows="4" required></textarea><button class="btn small" type="submit">ارسال پیام</button><div class="ok" id="ok-ticket2"></div></form>
+<hr style="border-color:var(--bd);margin:14px 0">
+<p data-i18n="support_text"></p>
+<div class="cta" style="margin-top:8px"><a class="btn ghost" href="https://t.me/Is_Pourhossine" target="_blank" rel="noopener">Admin 1</a><a class="btn ghost" href="https://t.me/Arshan_Khiabani0790" target="_blank" rel="noopener">Admin 2</a></div>
+</div>
+</section>
+</div>
+
+<footer>
+<div data-i18n="rights"></div>
+<div>Made by Ş0V Community</div>
+<div>اعتماد شما اعتبار ماست</div>
+<div>Your trust is our credibility</div>
+</footer>
+
+<!-- پنجره‌ی سفارش -->
+<div class="modal" id="orderModal">
+<div class="box">
+<h2 id="orderTitle" style="margin-top:0"></h2>
+<div class="msg" id="orderMsg"></div>
+<p class="note" data-i18n="admins_hint"></p>
+<div class="cta" style="margin-bottom:12px">
+<a class="btn ghost" href="https://t.me/Is_Pourhossine" target="_blank" rel="noopener">Admin 1</a>
+<a class="btn ghost" href="https://t.me/Arshan_Khiabani0790" target="_blank" rel="noopener">Admin 2</a>
+<span class="btn ghost" style="opacity:.5;cursor:not-allowed">Admin 3 (بسته تا اطلاع ثانوی)</span>
+</div>
+<div class="cta">
+<button class="btn" id="copyBtn" data-i18n="copy"></button>
+<button class="btn ghost" id="closeBtn" data-i18n="close"></button>
+</div>
+<div class="ok" id="orderOk"></div>
+</div>
+</div>
+
+<button class="btn chatbtn" id="chatBtn">🤖 مشاوره خرید</button>
+<div class="chatwin" id="chatWin">
+<div class="chathead"><b>راهنمای خرید سی‌پی</b><button class="iconbtn" id="chatClose">✕</button></div>
+<div class="msgs" id="chatMsgs"></div>
+<div class="qs" id="chatQs"></div>
+<div class="cin"><input id="chatIn" placeholder="بودجه‌ت رو بنویس، مثلاً ۵۰۰ هزار"><button class="btn small" id="chatSend">ارسال</button></div>
+</div>
+<button class="btn livebtn" id="liveBtn">💬 پیام به ادمین</button>
+<div class="chatwin" id="liveWin">
+<div class="chathead"><b>پیام به ادمین‌ها</b><button class="iconbtn" id="liveClose">✕</button></div>
+<div class="msgs" id="liveMsgs"></div>
+<div class="cin"><input id="liveIn" placeholder="پیامت رو بنویس"><button class="btn small" id="liveSend">ارسال</button></div>
+</div>
+<div class="toast hidden" id="toast"></div>
+
+<script>
+/* ===================== تنظیمات قابل ویرایش ===================== */
+const CP_LIST = [
+  { cp: 80, price: 297000, tag: 'فوری ۱۲ ساعت' },
+  { cp: 240, price: 837000, tag: 'فوری ۱۲ ساعت' },
+  { cp: 480, price: 1674000, tag: 'فوری ۱۲ ساعت' },
+  { cp: 880, price: 3024000, tag: 'فوری ۱۲ ساعت' },
+  { cp: 1300, price: 4657500, tag: 'فوری ۱۲ ساعت' },
+  { cp: 2400, price: 7249500, tag: 'فوری ۱۲ ساعت' },
+  { cp: 5000, price: 14742000, tag: 'فوری ۱۲ ساعت' },
+  { cp: 5880, price: 17818650, tag: 'فوری ۱۲ ساعت' },
+  { cp: 7400, price: 22003650, tag: 'فوری ۱۲ ساعت' },
+  { cp: 10800, price: 31453650, tag: 'فوری ۱۲ ساعت' },
+  { cp: 80, price: 276750, tag: 'فوری ۲ تا ۵ روز' },
+  { cp: 240, price: 816750, tag: 'فوری ۲ تا ۵ روز' },
+  { cp: 560, price: 1910250, tag: 'فوری ۲ تا ۵ روز' },
+  { cp: 1120, price: 3832650, tag: 'فوری ۲ تا ۵ روز' },
+  { cp: 2400, price: 7215750, tag: 'فوری ۲ تا ۵ روز' },
+  { cp: 5880, price: 17745750, tag: 'فوری ۲ تا ۵ روز' },
+  { cp: 10800, price: 31399650, tag: 'فوری ۲ تا ۵ روز' }
+];
+const RATE_BASE = 1; // نرخ دلار وقتی قیمت‌های بالا رو گذاشتی
+const RATE_NOW = 1;  // نرخ دلار فعلی: هر وقت دلار عوض شد این عدد رو عوض کن
+CP_LIST.forEach(x => { if (x.price) x.price = Math.round(x.price * RATE_NOW / RATE_BASE); });
+/* ================================================================ */
+
+/* ---------- ترجمه‌ها ---------- */
+const LANGS = {
+fa:{name:"فارسی",dir:"rtl",s:{
+brand:"گیم‌استور",nav_home:"خانه",nav_notices:"نوتیس",nav_profile:"پروفایل",nav_settings:"تنظیمات",nav_about:"درباره ما",
+hero_a:"خرید سی‌پی کالاف دیوتی موبایل",hero_b:"سریع و مطمئن",hero_p:"بسته‌ی موردنظرت رو انتخاب کن و از طریق ادمین‌ها سفارشت رو ثبت کن.",btn_view:"دیدن بسته‌ها",
+cp_title:"بسته‌های سی‌پی",cp_note:"قیمت‌ها به‌روز هستن و با تغییر، در این بخش اعمال می‌شن.",buy:"خرید",soon:"به‌زودی",
+order_title:"سفارش {cp} سی‌پی",order_msg:"سلام، می‌خوام {cp} سی‌پی کالاف دیوتی موبایل سفارش بدم.",
+copy:"کپی متن سفارش",copied:"متن کپی شد. حالا در پیوی یکی از ادمین‌ها بفرستش.",copy_fail:"کپی نشد؛ متن رو دستی کپی کن.",
+admins_hint:"متن رو کپی کن و در پیوی یکی از ادمین‌ها بفرست:",close:"بستن",
+welcome:"خوش آمدی، {name}! 🎮",welcome_anon:"به گیم‌استور خوش آمدی! 🎮",
+n1_t:"خوش آمدی",n1_b:"بسته‌ی موردنظرت رو انتخاب کن و از ادمین‌ها سفارش بده.",
+n2_t:"زبان و تنظیمات",n2_b:"زبان، حالت نمایش و رنگ سایت رو از بخش تنظیمات عوض کن.",
+notices_empty:"هنوز نوتیسی نیست.",
+profile_title:"پروفایل",profile_create:"برای ساخت پروفایل، نام و آیدی دلخواهت رو وارد کن.",name_label:"نام نمایشی",id_label:"آیدی (بدون @)",
+create:"ساخت پروفایل",save:"ذخیره",photo_label:"تغییر عکس",logout:"حذف پروفایل از این دستگاه",need_fields:"نام و آیدی رو وارد کن.",saved:"ذخیره شد.",
+settings_title:"تنظیمات",lang_label:"زبان",theme_label:"حالت نمایش",dark:"شب",light:"روز",accent_label:"رنگ سایت",anim_label:"انیمیشن‌ها",on:"روشن",off:"خاموش",
+about_title:"درباره ما",tab_problem:"مشکلات سایت",tab_complaint:"شکایت",tab_support:"پشتیبانی",problem_ph:"مشکلی که دیدی رو بنویس",complaint_ph:"شکایت خودت رو بنویس",
+send:"کپی و ارسال در تلگرام",support_text:"برای پشتیبانی با این شماره تماس بگیر:",empty_text:"اول متن رو بنویس.",sent_hint:"متن کپی شد. حالا در پیوی یکی از ادمین‌ها بفرست.",
+faq_title:"سوالات متداول",faq1_q:"سی‌پی چطور شارژ می‌شه؟",faq1_a:"بسته رو انتخاب کن، سفارش رو از طریق ادمین‌ها ثبت کن و بعد از هماهنگی شارژ انجام می‌شه.",
+faq2_q:"چقدر طول می‌کشه؟",faq2_a:"معمولاً بعد از تایید پرداخت، در زمان کوتاهی.",rights:"© گیم‌استور — همه حقوق محفوظ است"}},
+en:{name:"English",dir:"ltr",s:{
+brand:"GameStore",nav_home:"Home",nav_notices:"Notices",nav_profile:"Profile",nav_settings:"Settings",nav_about:"About",
+hero_a:"Buy Call of Duty Mobile CP",hero_b:"Fast & Secure",hero_p:"Pick your pack and place your order through one of our admins.",btn_view:"View packs",
+cp_title:"CP Packs",cp_note:"Prices are up to date and will change here if they change.",buy:"Buy",soon:"Coming soon",
+order_title:"Order {cp} CP",order_msg:"Hi, I'd like to order {cp} CP for Call of Duty Mobile.",
+copy:"Copy order text",copied:"Text copied. Now send it in a DM to one of the admins.",copy_fail:"Copy failed; please copy the text manually.",
+admins_hint:"Copy the text and send it in a DM to one of the admins:",close:"Close",
+welcome:"Welcome, {name}! 🎮",welcome_anon:"Welcome to GameStore! 🎮",
+n1_t:"Welcome",n1_b:"Pick your pack and order through one of the admins.",
+n2_t:"Language & settings",n2_b:"Change language, theme and accent color in Settings.",
+notices_empty:"No notices yet.",
+profile_title:"Profile",profile_create:"Enter a display name and a handle to create your profile.",name_label:"Display name",id_label:"Handle (without @)",
+create:"Create profile",save:"Save",photo_label:"Change photo",logout:"Remove profile from this device",need_fields:"Please enter a name and a handle.",saved:"Saved.",
+settings_title:"Settings",lang_label:"Language",theme_label:"Display mode",dark:"Dark",light:"Light",accent_label:"Site color",anim_label:"Animations",on:"On",off:"Off",
+about_title:"About us",tab_problem:"Site issues",tab_complaint:"Complaint",tab_support:"Support",problem_ph:"Describe the issue you found",complaint_ph:"Write your complaint",
+send:"Copy & send on Telegram",support_text:"For support, call this number:",empty_text:"Please write something first.",sent_hint:"Text copied. Now send it in a DM to one of the admins.",
+faq_title:"FAQ",faq1_q:"How is CP delivered?",faq1_a:"Pick a pack, place your order through the admins, and it is charged after coordination.",
+faq2_q:"How long does it take?",faq2_a:"Usually a short time after payment is confirmed.",rights:"© GameStore — All rights reserved"}},
+ar:{name:"العربية",dir:"rtl",s:{
+brand:"جيم ستور",nav_home:"الرئيسية",nav_notices:"الإشعارات",nav_profile:"الملف",nav_settings:"الإعدادات",nav_about:"من نحن",
+hero_a:"شراء CP كول أوف ديوتي موبايل",hero_b:"سريع وآمن",hero_p:"اختر الباقة وأكد طلبك عبر أحد المشرفين.",btn_view:"عرض الباقات",
+cp_title:"باقات CP",cp_note:"الأسعار محدثة وستتغير هنا عند أي تعديل.",buy:"شراء",soon:"قريباً",
+order_title:"طلب {cp} CP",order_msg:"مرحباً، أريد طلب {cp} CP لكول أوف ديوتي موبايل.",
+copy:"نسخ نص الطلب",copied:"تم النسخ. أرسله الآن في الخاص لأحد المشرفين.",copy_fail:"فشل النسخ، انسخ النص يدوياً.",
+admins_hint:"انسخ النص وأرسله في الخاص لأحد المشرفين:",close:"إغلاق",
+welcome:"أهلاً بك، {name}! 🎮",welcome_anon:"أهلاً بك في جيم ستور! 🎮",
+n1_t:"مرحباً",n1_b:"اختر الباقة واطلب عبر أحد المشرفين.",
+n2_t:"اللغة والإعدادات",n2_b:"غيّر اللغة والوضع ولون الموقع من الإعدادات.",
+notices_empty:"لا توجد إشعارات بعد.",
+profile_title:"الملف الشخصي",profile_create:"أدخل اسماً وآيدي لإنشاء ملفك.",name_label:"الاسم",id_label:"الآيدي (بدون @)",
+create:"إنشاء الملف",save:"حفظ",photo_label:"تغيير الصورة",logout:"حذف الملف من هذا الجهاز",need_fields:"أدخل الاسم والآيدي.",saved:"تم الحفظ.",
+settings_title:"الإعدادات",lang_label:"اللغة",theme_label:"وضع العرض",dark:"داكن",light:"فاتح",accent_label:"لون الموقع",anim_label:"الحركات",on:"تشغيل",off:"إيقاف",
+about_title:"من نحن",tab_problem:"مشاكل الموقع",tab_complaint:"شكوى",tab_support:"الدعم",problem_ph:"اكتب المشكلة",complaint_ph:"اكتب شكواك",
+send:"نسخ وإرسال عبر تيليجرام",support_text:"للدعم اتصل بهذا الرقم:",empty_text:"اكتب النص أولاً.",sent_hint:"تم النسخ. أرسله لأحد المشرفين.",
+faq_title:"الأسئلة الشائعة",faq1_q:"كيف يتم شحن CP؟",faq1_a:"اختر الباقة واطلب عبر المشرفين، وبعد التنسيق يتم الشحن.",
+faq2_q:"كم يستغرق الأمر؟",faq2_a:"عادةً وقت قصير بعد تأكيد الدفع.",rights:"© جيم ستور — جميع الحقوق محفوظة"}},
+tr:{name:"Türkçe",dir:"ltr",s:{
+brand:"GameStore",nav_home:"Ana sayfa",nav_notices:"Bildirimler",nav_profile:"Profil",nav_settings:"Ayarlar",nav_about:"Hakkımızda",
+hero_a:"Call of Duty Mobile CP satın al",hero_b:"Hızlı ve güvenli",hero_p:"Paketini seç ve yöneticilerimizden biri ile siparişini onayla.",btn_view:"Paketleri gör",
+cp_title:"CP Paketleri",cp_note:"Fiyatlar güncel; değişirse burada yansır.",buy:"Satın al",soon:"Yakında",
+order_title:"{cp} CP siparişi",order_msg:"Merhaba, Call of Duty Mobile için {cp} CP sipariş etmek istiyorum.",
+copy:"Sipariş metnini kopyala",copied:"Metin kopyalandı. Şimdi yöneticilerden birine özelden gönder.",copy_fail:"Kopyalanamadı, metni elle kopyala.",
+admins_hint:"Metni kopyala ve yöneticilerden birine özelden gönder:",close:"Kapat",
+welcome:"Hoş geldin, {name}! 🎮",welcome_anon:"GameStore'a hoş geldin! 🎮",
+n1_t:"Hoş geldin",n1_b:"Paketini seç ve yöneticilerden biri üzerinden sipariş ver.",
+n2_t:"Dil ve ayarlar",n2_b:"Dil, görünüm modu ve site rengini Ayarlar'dan değiştir.",
+notices_empty:"Henüz bildirim yok.",
+profile_title:"Profil",profile_create:"Profilini oluşturmak için bir ad ve kullanıcı adı gir.",name_label:"Görünen ad",id_label:"Kullanıcı adı (@ olmadan)",
+create:"Profil oluştur",save:"Kaydet",photo_label:"Fotoğrafı değiştir",logout:"Profili bu cihazdan kaldır",need_fields:"Ad ve kullanıcı adı gir.",saved:"Kaydedildi.",
+settings_title:"Ayarlar",lang_label:"Dil",theme_label:"Görünüm",dark:"Koyu",light:"Açık",accent_label:"Site rengi",anim_label:"Animasyonlar",on:"Açık",off:"Kapalı",
+about_title:"Hakkımızda",tab_problem:"Site sorunları",tab_complaint:"Şikayet",tab_support:"Destek",problem_ph:"Gördüğün sorunu yaz",complaint_ph:"Şikayetini yaz",
+send:"Kopyala ve Telegram'da gönder",support_text:"Destek için bu numarayı ara:",empty_text:"Önce bir metin yaz.",sent_hint:"Metin kopyalandı. Yöneticilerden birine gönder.",
+faq_title:"SSS",faq1_q:"CP nasıl yüklenir?",faq1_a:"Paketi seç, yöneticiler üzerinden siparişi onayla; koordinasyondan sonra yükleme yapılır.",
+faq2_q:"Ne kadar sürer?",faq2_a:"Ödeme onaylandıktan sonra genellikle kısa sürede.",rights:"© GameStore — Tüm hakları saklıdır"}},
+ru:{name:"Русский",dir:"ltr",s:{
+brand:"GameStore",nav_home:"Главная",nav_notices:"Уведомления",nav_profile:"Профиль",nav_settings:"Настройки",nav_about:"О нас",
+hero_a:"Купить CP для Call of Duty Mobile",hero_b:"Быстро и надёжно",hero_p:"Выберите пакет и оформите заказ через одного из администраторов.",btn_view:"Смотреть пакеты",
+cp_title:"Пакеты CP",cp_note:"Цены актуальны и обновляются здесь при изменении.",buy:"Купить",soon:"Скоро",
+order_title:"Заказ {cp} CP",order_msg:"Здравствуйте, хочу заказать {cp} CP для Call of Duty Mobile.",
+copy:"Копировать текст заказа",copied:"Текст скопирован. Отправьте его администратору в личные сообщения.",copy_fail:"Не удалось скопировать, скопируйте вручную.",
+admins_hint:"Скопируйте текст и отправьте одному из администраторов в личные сообщения:",close:"Закрыть",
+welcome:"Добро пожаловать, {name}! 🎮",welcome_anon:"Добро пожаловать в GameStore! 🎮",
+n1_t:"Добро пожаловать",n1_b:"Выберите пакет и оформите заказ через администратора.",
+n2_t:"Язык и настройки",n2_b:"Измените язык, режим и цвет сайта в настройках.",
+notices_empty:"Уведомлений пока нет.",
+profile_title:"Профиль",profile_create:"Введите имя и никнейм, чтобы создать профиль.",name_label:"Отображаемое имя",id_label:"Никнейм (без @)",
+create:"Создать профиль",save:"Сохранить",photo_label:"Сменить фото",logout:"Удалить профиль с этого устройства",need_fields:"Введите имя и никнейм.",saved:"Сохранено.",
+settings_title:"Настройки",lang_label:"Язык",theme_label:"Режим отображения",dark:"Тёмный",light:"Светлый",accent_label:"Цвет сайта",anim_label:"Анимации",on:"Вкл",off:"Выкл",
+about_title:"О нас",tab_problem:"Проблемы сайта",tab_complaint:"Жалоба",tab_support:"Поддержка",problem_ph:"Опишите проблему",complaint_ph:"Напишите жалобу",
+send:"Копировать и отправить в Telegram",support_text:"Для поддержки позвоните по номеру:",empty_text:"Сначала напишите текст.",sent_hint:"Текст скопирован. Отправьте администратору.",
+faq_title:"Частые вопросы",faq1_q:"Как происходит зачисление CP?",faq1_a:"Выберите пакет, оформите заказ через администраторов, зачисление происходит после согласования.",
+faq2_q:"Как быстро?",faq2_a:"Обычно за короткое время после подтверждения оплаты.",rights:"© GameStore — Все права защищены"}},
+fr:{name:"Français",dir:"ltr",s:{
+brand:"GameStore",nav_home:"Accueil",nav_notices:"Notifications",nav_profile:"Profil",nav_settings:"Paramètres",nav_about:"À propos",
+hero_a:"Acheter des CP Call of Duty Mobile",hero_b:"Rapide et sûr",hero_p:"Choisissez votre pack et passez commande via l'un de nos admins.",btn_view:"Voir les packs",
+cp_title:"Packs CP",cp_note:"Les prix sont à jour et seront modifiés ici en cas de changement.",buy:"Acheter",soon:"Bientôt",
+order_title:"Commande {cp} CP",order_msg:"Bonjour, je souhaite commander {cp} CP pour Call of Duty Mobile.",
+copy:"Copier le texte",copied:"Texte copié. Envoyez-le à un admin en message privé.",copy_fail:"Copie impossible, copiez manuellement.",
+admins_hint:"Copiez le texte et envoyez-le en message privé à un admin :",close:"Fermer",
+welcome:"Bienvenue, {name} ! 🎮",welcome_anon:"Bienvenue sur GameStore ! 🎮",
+n1_t:"Bienvenue",n1_b:"Choisissez votre pack et commandez via un admin.",
+n2_t:"Langue et réglages",n2_b:"Changez la langue, le mode et la couleur dans Paramètres.",
+notices_empty:"Aucune notification.",
+profile_title:"Profil",profile_create:"Saisissez un nom et un identifiant pour créer votre profil.",name_label:"Nom affiché",id_label:"Identifiant (sans @)",
+create:"Créer le profil",save:"Enregistrer",photo_label:"Changer la photo",logout:"Supprimer le profil de cet appareil",need_fields:"Saisissez un nom et un identifiant.",saved:"Enregistré.",
+settings_title:"Paramètres",lang_label:"Langue",theme_label:"Affichage",dark:"Sombre",light:"Clair",accent_label:"Couleur du site",anim_label:"Animations",on:"Activées",off:"Désactivées",
+about_title:"À propos",tab_problem:"Problèmes du site",tab_complaint:"Réclamation",tab_support:"Support",problem_ph:"Décrivez le problème",complaint_ph:"Écrivez votre réclamation",
+send:"Copier et envoyer sur Telegram",support_text:"Pour le support, appelez ce numéro :",empty_text:"Écrivez d'abord un texte.",sent_hint:"Texte copié. Envoyez-le à un admin.",
+faq_title:"FAQ",faq1_q:"Comment les CP sont-ils livrés ?",faq1_a:"Choisissez un pack, passez commande via les admins ; la livraison se fait après coordination.",
+faq2_q:"Combien de temps ?",faq2_a:"En général peu de temps après confirmation du paiement.",rights:"© GameStore — Tous droits réservés"}}
+};
+
+/* ---------- حافظه ---------- */
+const store = {
+  get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+  set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+};
+let lang = store.get("gs_lang") || "fa";
+if (!LANGS[lang]) lang = "fa";
+const t = (k, vars={}) => {
+  let s = (LANGS[lang].s[k] ?? LANGS.en.s[k] ?? k);
+  for (const v in vars) s = s.replace("{"+v+"}", vars[v]);
+  return s;
+};
+const $ = id => document.getElementById(id);
+const fmtNum = n => Number(n).toLocaleString(lang === "fa" ? "fa-IR" : lang === "ar" ? "ar-EG" : "en-US");
+const fmtPrice = p => p ? fmtNum(p) + (lang === "fa" ? " تومان" : " IRR") : t("soon");
+
+/* ---------- تم، رنگ، انیمیشن ---------- */
+function applyTheme(th){ document.documentElement.setAttribute("data-theme", th); store.set("gs_theme", th); $("themeSel").value = th; }
+function applyAccent(c){ document.documentElement.style.setProperty("--ac", c); document.documentElement.style.setProperty("--ac2", c); store.set("gs_accent", c); $("accentInp").value = c; }
+function applyAnim(on){
+  document.documentElement.classList.toggle("noanim", !on);
+  document.documentElement.classList.toggle("anim-on", on);
+  store.set("gs_anim", on ? "on" : "off"); $("animSel").value = on ? "on" : "off";
+}
+applyTheme(store.get("gs_theme") || "dark");
+applyAccent(store.get("gs_accent") || "#2563eb");
+applyAnim((store.get("gs_anim") || "on") === "on");
+$("themeBtn").onclick = () => applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+$("themeSel").onchange = e => applyTheme(e.target.value);
+$("accentInp").oninput = e => applyAccent(e.target.value);
+$("animSel").onchange = e => applyAnim(e.target.value === "on");
+
+/* ---------- زبان ---------- */
+$("langSel").innerHTML = Object.keys(LANGS).map(k => `<option value="${k}">${LANGS[k].name}</option>`).join("");
+$("langSel").onchange = e => { lang = e.target.value; store.set("gs_lang", lang); renderAll(); };
+
+function applyStatic(){
+  document.documentElement.lang = lang;
+  document.documentElement.dir = LANGS[lang].dir;
+  document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t(el.dataset.i18n));
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => el.placeholder = t(el.dataset.i18nPh));
+  $("langSel").value = lang;
+  document.title = t("brand") + " | " + t("cp_title");
+}
+
+/* ---------- صفحات ---------- */
+function showPage(name){
+  document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === "page-" + name));
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.page === name));
+  window.scrollTo({top:0,behavior:"smooth"});
+  if (name === "notices") renderNotices();
+  if (name === "categories") renderGames();
+  if (name === "accounts") renderAccounts();
+  if (name === "cart") renderCart();
+  if (name === "profile") renderProfile();
+}
+document.querySelectorAll("[data-page]").forEach(b => b.addEventListener("click", e => {
+  e.preventDefault();
+  showPage(b.dataset.page);
+  if (b.dataset.goto) setTimeout(() => $(b.dataset.goto).scrollIntoView({behavior:"smooth"}), 350);
+}));
+
+/* ---------- سی‌پی ---------- */
+let currentOrder = "";
+function renderCP(){
+  $("cpGrid").innerHTML = CP_LIST.map((x,i) => `
+<div class="card" style="--d:${i*0.08}s">
+<div class="big">${fmtNum(x.cp)} CP${x.tag ? ' <small style="font-size:.8rem;color:var(--mu)">' + x.tag + '</small>' : ''}</div>
+<div class="price">${priceHtml(i)}</div>
+<button class="btn small" data-add="${i}">افزودن به سبد</button>
+</div>`).join("");
+  bindAdd($("cpGrid"));
+}
+$("copyBtn").onclick = async () => {
+  try { await navigator.clipboard.writeText(currentOrder); $("orderOk").textContent = t("copied"); }
+  catch(e){ $("orderOk").textContent = t("copy_fail"); }
+};
+$("closeBtn").onclick = () => $("orderModal").classList.remove("open");
+$("orderModal").onclick = e => { if (e.target.id === "orderModal") $("orderModal").classList.remove("open"); };
+
+/* ---------- نوتیس ---------- */
+function getNotices(){ try { return JSON.parse(store.get("gs_notices") || "[]"); } catch(e){ return []; } }
+function addNotice(titleKey, bodyKey){
+  const list = getNotices();
+  list.unshift({ at: Date.now(), t: titleKey, b: bodyKey });
+  store.set("gs_notices", JSON.stringify(list.slice(0,30)));
+}
+function renderNotices(){
+  const list = getNotices();
+  $("noticeList").innerHTML = list.length
+    ? list.map(n => `<div class="notice"><b>${t(n.t)}</b><br>${t(n.b)}<br><small>${new Date(n.at).toLocaleString(lang === "fa" ? "fa-IR" : "en-US")}</small></div>`).join("")
+    : `<p class="note">${t("notices_empty")}</p>`;
+}
+
+/* ---------- خوش‌آمد ---------- */
+let toastTimer;
+function welcome(){
+  const p = JSON.parse(store.get("gs_profile") || "null");
+  const msg = p ? t("welcome", {name: p.name}) : t("welcome_anon");
+  const el = $("toast");
+  el.textContent = msg;
+  el.classList.remove("hidden","out");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.classList.add("out"); setTimeout(() => el.classList.add("hidden"), 450); }, 4200);
+}
+
+/* ---------- پروفایل ---------- */
+function renderProfile(){
+  const p = JSON.parse(store.get("gs_profile") || "null");
+  const box = $("profileBox");
+  if (!p){
+    box.innerHTML = `<p>${t("profile_create")}</p>
+<label>${t("name_label")}</label><input id="pName" maxlength="30">
+<label>${t("id_label")}</label><input id="pId" maxlength="30">
+<button class="btn small" id="pSave">${t("create")}</button>
+<div class="ok err" id="pOk"></div>`;
+    $("pSave").onclick = () => {
+      const name = $("pName").value.trim(), id = $("pId").value.trim();
+      if (!name || !id){ $("pOk").textContent = t("need_fields"); return; }
+      store.set("gs_profile", JSON.stringify({name, id, photo: ""}));
+      renderProfile();
+    };
+    return;
+  }
+  box.innerHTML = `
+<img class="avatar" id="pImg" src="${p.photo || ""}" alt="" style="${p.photo ? "" : "display:none"}">
+<label>${t("photo_label")}</label><input type="file" accept="image/*" id="pFile">
+<label>${t("name_label")}</label><input id="pName2" maxlength="30">
+<label>${t("id_label")}</label><input id="pId2" maxlength="30">
+<div class="row">
+<button class="btn small" id="pUpd">${t("save")}</button>
+<button class="btn ghost small" id="pOut">${t("logout")}</button>
+</div>
+<div class="ok" id="pOk2"></div>`;
+  $("pName2").value = p.name;
+  $("pId2").value = p.id;
+  $("pFile").onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => { p.photo = r.result; store.set("gs_profile", JSON.stringify(p)); $("pImg").src = r.result; $("pImg").style.display = ""; };
+    r.readAsDataURL(f);
+  };
+  $("pUpd").onclick = () => {
+    p.name = $("pName2").value.trim() || p.name;
+    p.id = $("pId2").value.trim() || p.id;
+    store.set("gs_profile", JSON.stringify(p));
+    $("pOk2").className = "ok"; $("pOk2").textContent = t("saved");
+  };
+  $("pOut").onclick = () => { store.set("gs_profile", ""); renderProfile(); };
+}
+
+/* ---------- درباره ما ---------- */
+document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => {
+  ["problem","complaint","support","ticket"].forEach(x => $("tab-"+x).classList.toggle("hidden", x !== b.dataset.tab));
+});
+document.querySelectorAll("[data-send]").forEach(b => b.onclick = async () => {
+  const id = b.dataset.send, text = $(id).value.trim(), ok = $("ok-"+id);
+  if (!text){ ok.className = "ok err"; ok.textContent = t("empty_text"); return; }
+  const label = id === "problemText" ? t("tab_problem") : t("tab_complaint");
+  try { await navigator.clipboard.writeText(`${label}:\n${text}`); } catch(e){}
+  ok.className = "ok";
+  ok.textContent = t("sent_hint");
+});
+
+/* ---------- رندر کلی ---------- */
+function renderAll(){
+  applyStatic();
+  renderCP();
+  const active = document.querySelector(".page.active");
+  if (active && active.id === "page-notices") renderNotices();
+  if (active && active.id === "page-profile") renderProfile();
+}
+
+/* ---------- مشاوره خرید (بر اساس قیمت‌های CP_LIST) ---------- */
+const fa = n => Number(n).toLocaleString('fa-IR');
+const priced = () => CP_LIST.filter(x => x.price);
+function pickFor(budget){
+  let best = null;
+  for (const x of priced()) if (x.price <= budget && (!best || x.cp > best.cp)) best = x;
+  return best;
+}
+function bestValue(){
+  return priced().map(x => ({...x, per: x.price / x.cp})).sort((a,b) => a.per - b.per)[0];
+}
+function answerBudget(b){
+  const p = pickFor(b);
+  if (!p){
+    const m = priced().sort((a,b) => a.price - b.price)[0];
+    return `با این بودجه بسته‌ای نمی‌تونم پیشنهاد بدم. کم‌قیمت‌ترین بسته ${fa(m.cp)} سی‌پیه و ${fa(m.price)} تومان قیمت داره.`;
+  }
+  let s = `با بودجه‌ی حدود ${fa(b)} تومان، بسته‌ی ${fa(p.cp)} سی‌پی (${fa(p.price)} تومان) رو پیشنهاد می‌کنم. بزرگ‌ترین بسته‌ایه که توی بودجه‌ت جا می‌شه.`;
+  const bv = bestValue();
+  if (bv.cp !== p.cp) s += `\n\nاگه بودجه‌ت اجازه بده، بسته‌ی ${fa(bv.cp)} سی‌پی ارزون‌ترین قیمت برای هر سی‌پی رو داره.`;
+  return s;
+}
+function answerValue(){
+  const rows = priced().map(x => `${fa(x.cp)} سی‌پی: حدود ${fa(Math.round(x.price / x.cp))} تومان برای هر سی‌پی`).join('\n');
+  const bv = bestValue();
+  return `ارزش هر بسته:\n${rows}\n\nاز نظر قیمت هر سی‌پی، بسته‌ی ${fa(bv.cp)} سی‌پی صرفه‌ی بیشتری داره. اگه بودجه‌ت کمه، بسته‌ی کوچیک‌تر رو بردار و بعدش هر وقت خواستی بیشتر شارژ کن.`;
+}
+function parseBudget(s){
+  s = s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+  const m = s.match(/(\d+(?:\.\d+)?)/);
+  if (!m) return null;
+  let n = parseFloat(m[1]);
+  if (/میلیون/.test(s)) n *= 1e6; else if (/هزار/.test(s)) n *= 1e3;
+  return n;
+}
+function addMsg(txt, me){
+  const d = document.createElement('div');
+  d.className = 'b' + (me ? ' u' : '');
+  d.textContent = txt;
+  $('chatMsgs').appendChild(d);
+  $('chatMsgs').scrollTop = 1e9;
+}
+function botReply(text){
+  addMsg(text, false);
+}
+function handleUser(text){
+  text = text.trim();
+  if (!text) return;
+  addMsg(text, true);
+  if (/ارزش|صرفه|بهترین|بهتره|بهترین/.test(text)) return botReply(answerValue());
+  const n = parseBudget(text);
+  if (n) return botReply(answerBudget(n));
+  botReply('می‌تونی بودجه‌ت رو بنویسی، مثلاً ۵۰۰ هزار. یا بپرس کدوم بسته ارزش خرید داره.');
+}
+let chatReady = false;
+function initChat(){
+  if (chatReady) return;
+  chatReady = true;
+  botReply('سلام! من راهنمای خرید سی‌پی هستم. بودجه‌ت چقدره؟ یا بپرس کدوم بسته ارزش خرید داره.');
+  const qs = [['تا ۲۰۰ هزار', 200000], ['تا ۱ میلیون', 1000000], ['تا ۲ میلیون', 2000000], ['بیشتر از ۱۰ میلیون', 11000000]];
+  $('chatQs').innerHTML = '';
+  qs.forEach(([label, val]) => {
+    const b = document.createElement('button');
+    b.textContent = label;
+    b.onclick = () => { addMsg(label, true); botReply(answerBudget(val)); };
+    $('chatQs').appendChild(b);
+  });
+  const vb = document.createElement('button');
+  vb.textContent = 'کدوم ارزش خرید داره؟';
+  vb.onclick = () => { addMsg(vb.textContent, true); botReply(answerValue()); };
+  $('chatQs').appendChild(vb);
+}
+$('chatBtn').onclick = () => { $('chatWin').classList.toggle('open'); initChat(); };
+$('chatClose').onclick = () => $('chatWin').classList.remove('open');
+$('chatSend').onclick = () => { const v = $('chatIn').value; $('chatIn').value = ''; handleUser(v); };
+$('chatIn').addEventListener('keydown', e => { if (e.key === 'Enter') $('chatSend').click(); });
+
+/* ---------- تخفیف، سبد خرید، دسته‌بندی ---------- */
+/* درصد تخفیف را هر هفته اینجا عوض کن. weekPercent برای همه‌ی بسته‌هاست؛ packPercent برای بسته‌ی خاص با شماره‌ی ردیف (از صفر): مثلاً {2: 30} یعنی بسته‌ی سوم ۳۰٪ */
+const DISCOUNT_WEEKS = [0]; // درصد تخفیف هر هفته، به‌ترتیب و چرخشی
+const DISCOUNT_START = Date.UTC(2026, 9, 26); // شروع چرخه (دوشنبه)
+const DISCOUNT = {
+  get weekPercent(){
+    const n = DISCOUNT_WEEKS.length;
+    const w = Math.floor((Date.now() - DISCOUNT_START) / (7 * 86400000));
+    return DISCOUNT_WEEKS[((w % n) + n) % n];
+  },
+  packPercent: {}
+};
+const PROFIT_PERCENT = 7;
+const GAMES = [
+  { id: 'cod',  name: 'Call of Duty Mobile', g: 'linear-gradient(135deg,#3f3f46,#0a0a0a)' },
+  { id: 'ff',   name: 'Free Fire Mobile',    g: 'linear-gradient(135deg,#f59e0b,#b91c1c)' },
+  { id: 'pubg', name: 'PUBG Mobile',         g: 'linear-gradient(135deg,#facc15,#78350f)' },
+  { id: 'wz',   name: 'Call of Duty Warzone',g: 'linear-gradient(135deg,#166534,#052e16)' },
+  { id: 'cs2',  name: 'Counter-Strike 2',    g: 'linear-gradient(135deg,#2563eb,#0f172a)' }
+];
+
+function discountFor(i){
+  const x = CP_LIST[i];
+  const p = (x && x.discount) ? x.discount : 0;
+  return Math.min(90, Math.max(0, Number(p) || 0));
+}
+function effPrice(i){
+  const x = CP_LIST[i];
+  return x.price ? Math.round(x.price * (1 - discountFor(i) / 100)) : 0;
+}
+function priceHtml(i){
+  const x = CP_LIST[i];
+  if (!x.price) return t('soon');
+  const d = discountFor(i);
+  if (!d) return fmtPrice(x.price);
+  return `<span class="old">${fmtNum(x.price)}</span>${fmtNum(effPrice(i))} تومان <span class="badge">(${fa(d)}٪ تخفیف)</span>`;
+}
+function cartGet(){ try { return JSON.parse(store.get('gs_cart') || '[]'); } catch(e){ return []; } }
+function cartSet(c){ store.set('gs_cart', JSON.stringify(c)); updateCartCount(); }
+function updateCartCount(){
+  const n = cartGet().reduce((a,r) => a + r.q, 0);
+  const el = $('cartCount'); if (el) el.textContent = n ? '(' + fa(n) + ')' : '';
+}
+function toastMsg(msg){
+  const el = $('toast');
+  el.textContent = msg;
+  el.classList.remove('hidden','out');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.classList.add('out'); setTimeout(() => el.classList.add('hidden'), 450); }, 2600);
+}
+function addToCart(i){
+  if (!CP_LIST[i].price) return;
+  const c = cartGet();
+  const r = c.find(x => x.i === i);
+  if (r) r.q++; else c.push({ i, q: 1 });
+  cartSet(c);
+  toastMsg('به سبد خرید اضافه شد ✅ — ' + fmtNum(CP_LIST[i].cp) + ' سی‌پی');
+}
+function bindAdd(root){
+  root.querySelectorAll('[data-add]').forEach(b => b.onclick = () => addToCart(Number(b.dataset.add)));
+}
+function showGame(id){
+  const g = GAMES.find(x => x.id === id);
+  $('gameTitle').textContent = g.name;
+  if (id === 'cod'){
+    $('gameBody').innerHTML = '<div class="grid">' + CP_LIST.map((x,i) => `
+<div class="card"><div class="big">${fmtNum(x.cp)} CP${x.tag ? ' <small style="font-size:.8rem;color:var(--mu)">' + x.tag + '</small>' : ''}</div><div class="price">${priceHtml(i)}</div><button class="btn small" data-add="${i}">افزودن به سبد</button></div>`).join('') + '</div>';
+    bindAdd($('gameBody'));
+  } else {
+    $('gameBody').innerHTML = '<p class="note">به‌زودی بسته‌های ' + g.name + ' اضافه می‌شن.</p>';
+  }
+  showPage('game');
+}
+function renderGames(){
+  $('gameGrid').innerHTML = GAMES.map((g,i) => `<div class="gametile" style="background:${g.g};--d:${i*0.08}s" data-game="${g.id}">${g.name}</div>`).join('');
+  document.querySelectorAll('[data-game]').forEach(el => el.onclick = () => showGame(el.dataset.game));
+}
+function changeQty(i, d){
+  let c = cartGet();
+  const r = c.find(x => x.i === i); if (!r) return;
+  r.q += d;
+  c = c.filter(x => x.q > 0);
+  cartSet(c); renderCart();
+}
+function removeFromCart(i){
+  cartSet(cartGet().filter(x => x.i !== i)); renderCart();
+}
+function renderCart(){
+  const c = cartGet().filter(r => CP_LIST[r.i] && CP_LIST[r.i].price);
+  if (!c.length){
+    $('cartBox').innerHTML = '<p>سبد خریدت خالیه. از دسته‌بندی یا بخش سی‌پی بسته‌ای اضافه کن.</p>';
+    return;
+  }
+  let sub = 0;
+  const rows = c.map(r => {
+    sub += effPrice(r.i) * r.q;
+    return `<div class="cartrow"><div><b>${fmtNum(CP_LIST[r.i].cp)} CP</b><br>${priceHtml(r.i)}</div>` +
+      `<div class="qty"><button data-dec="${r.i}">−</button> ${fa(r.q)} <button data-inc="${r.i}">+</button> <button data-rm="${r.i}">✕</button></div></div>`;
+  }).join('');
+  const final = Math.round(sub * (1 + PROFIT_PERCENT / 100));
+  $('cartBox').innerHTML = rows + `<p style="margin-top:12px"><b>جمع کل قیمت نهایی: ${fmtNum(final)} تومان</b></p><button class="btn" id="checkout">پرداخت و تماس با ادمین‌ها</button>`;
+  $('cartBox').querySelectorAll('[data-inc]').forEach(b => b.onclick = () => changeQty(Number(b.dataset.inc), 1));
+  $('cartBox').querySelectorAll('[data-dec]').forEach(b => b.onclick = () => changeQty(Number(b.dataset.dec), -1));
+  $('cartBox').querySelectorAll('[data-rm]').forEach(b => b.onclick = () => removeFromCart(Number(b.dataset.rm)));
+  $('checkout').onclick = () => {
+    const lines = c.map(r => `${fmtNum(CP_LIST[r.i].cp)} سی‌پی × ${fa(r.q)}`);
+    const text = 'سلام، می‌خوام این سفارش رو ثبت کنم:\n' + lines.join('\n') + '\nجمع کل قیمت نهایی: ' + fmtNum(final) + ' تومان';
+    currentOrder = text;
+    $('orderTitle').textContent = 'سفارش شما';
+    $('orderMsg').textContent = text;
+    $('orderOk').textContent = '';
+    $('orderModal').classList.add('open');
+  };
+}
+
+/* ---------- اکانت‌ها (فقط نام، عکس، مشخصات و قیمت) ---------- */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let accPhotoData = '';
+let ACC_CACHE = [];
+function accGet(){ return ACC_CACHE; }
+
+function renderAccounts(){
+  const list = accGet();
+  $('accGrid').innerHTML = list.length ? list.map(a => `
+<div class="card">${a.photo ? `<img src="${a.photo}" alt="" style="width:100%;border-radius:12px;aspect-ratio:16/10;object-fit:cover">` : ''}
+<div class="big" style="font-size:1.1rem">${esc(a.name)}</div>
+<small>${esc(a.game)}</small>
+<small style="white-space:pre-line">${esc(a.specs)}</small>
+<div class="price">${a.price ? fmtNum(a.price) + ' تومان' : t('soon')}</div>
+<button class="btn small" data-accbuy="${a.id}">خرید از ادمین‌ها</button>
+</div>`).join('') : '<p class="note">هنوز اکانتی ثبت نشده.</p>';
+  document.querySelectorAll('[data-accbuy]').forEach(b => b.onclick = () => {
+    const a = accGet().find(x => x.id === b.dataset.accbuy);
+    if (!a) return;
+    currentOrder = 'سلام، می‌خوام اکانت «' + a.name + '» (' + a.game + ') رو بخرم.';
+    $('orderTitle').textContent = 'خرید اکانت';
+    $('orderMsg').textContent = currentOrder;
+    $('orderOk').textContent = '';
+    $('orderModal').classList.add('open');
+  });
+}
+$('addAccBtn').onclick = () => {
+  accPhotoData = '';
+  $('accName').value = ''; $('accSpecs').value = ''; $('accPrice').value = ''; $('accErr').textContent = '';
+  $('accModal').classList.add('open');
+};
+$('accCancel').onclick = () => $('accModal').classList.remove('open');
+$('accPhoto').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const img = new Image();
+  const url = URL.createObjectURL(f);
+  img.onload = () => {
+    const r = Math.min(1, 600 / Math.max(img.width, img.height));
+    const c = document.createElement('canvas');
+    c.width = Math.round(img.width * r); c.height = Math.round(img.height * r);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    accPhotoData = c.toDataURL('image/jpeg', 0.8);
+    URL.revokeObjectURL(url);
+  };
+  img.src = url;
+};
+$('accPublish').onclick = () => {
+  const name = $('accName').value.trim(), specs = $('accSpecs').value.trim(), game = $('accGame').value;
+  const price = parseInt(($('accPrice').value || '').replace(/[^\d]/g, ''), 10) || 0;
+  if (!name || !specs){ $('accErr').textContent = 'نام و مشخصات رو وارد کن.'; return; }
+  if (!DB){ $('accErr').textContent = 'این بخش هنوز به سرور وصل نشده.'; return; }
+  const id = Date.now().toString(36);
+  DB.collection('accounts').doc(id).set({ name, specs, price, game, photo: accPhotoData, at: Date.now() })
+    .then(() => { $('accModal').classList.remove('open'); toastMsg('اکانت منتشر شد ✅'); })
+    .catch(() => { $('accErr').textContent = 'ذخیره نشد؛ دوباره امتحان کن.'; });
+};
+
+/* ---------- اتصال اکانت‌ها به سرور مشترک ---------- */
+let DB = null;
+let CAN_EDIT = false;
+// لیست عمومی: هر اکانتی که می‌خوای همه ببینن رو اینجا اضافه کن (بدون عکس و بدون رمز/ایمیل)
+const STATIC_ACCOUNTS = [];
+(async () => {
+  ACC_CACHE = STATIC_ACCOUNTS;
+  renderAccounts();
+  try {
+    const cl = window.claude;
+    if (!cl) return;
+    const db = await cl.use('db');
+    const user = await cl.use('user');
+    CAN_EDIT = user ? !!(await user.canEdit()) : false;
+    $('addAccBtn').style.display = CAN_EDIT ? '' : 'none';
+    if (!db) { void '<p class="note">برای دیدن اکانت‌ها باید وارد شده باشی.</p>'; return; }
+    DB = db;
+    db.collection('accounts').orderBy('at', 'desc').limit(200).onSnapshot(snap => {
+      ACC_CACHE = snap.docs.filter(d => d.exists).map(d => ({ id: d.id, ...d.data() }));
+      renderAccounts();
+    }, () => {});
+  } catch (e) {}
+})();
+
+/* ---------- شروع ---------- */
+applyStatic();
+renderCP();
+renderNotices();
+updateCartCount();
+if (!getNotices().length){ addNotice("n1_t","n1_b"); addNotice("n2_t","n2_b"); }
+welcome();
+</script>
+
+<script>
+(function(){
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function(){});
+  var sp = document.getElementById('splash');
+  var msg = document.getElementById('spMsg');
+  var bar = document.getElementById('spBar');
+  var retry = document.getElementById('spRetry');
+  function hide(){ sp.classList.add('gone'); setTimeout(function(){ sp.remove(); }, 700); }
+  function offline(){
+    msg.textContent = 'بدون اینترنت. برای ورود به سایت، اینترنت گوشی رو روشن کن و دوباره تلاش کن.';
+    bar.style.display = 'none';
+    retry.classList.remove('hidden');
+  }
+  retry.onclick = function(){ location.reload(); };
+  if (!navigator.onLine) { offline(); }
+  else { setTimeout(function(){ if (navigator.onLine) hide(); else offline(); }, 1600); }
+  window.addEventListener('online', function(){ if (sp.parentNode) { location.reload(); } });
+})();
+
+/* ارسال تیکت به Netlify Forms (ذخیره‌شده توی داشبورد Netlify) */
+(function(){
+  var f=document.getElementById('ticketForm');
+  if(!f) return;
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=document.getElementById('ok-ticket');
+    var body=new URLSearchParams(new FormData(f)).toString();
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body})
+      .then(function(){ ok.style.color='#22c55e'; ok.textContent='تیکت ثبت شد. به‌زودی بررسی میشه.'; f.reset(); })
+      .catch(function(){ ok.style.color='#ef4444'; ok.textContent='ارسال نشد، اینترنت رو چک کن.'; });
+  });
+})();
+
+/* ---------- Supabase: قیمت‌ها، آفرها، حضور و چت زنده ---------- */
+const SB_URL = 'https://cyhjfojmxwsssqfqjlm.supabase.co';
+const SB_KEY = 'sb_publishable_JqsOBKa2ROBM2G0FbSNwFw_pS0DaNQV';
+const sb = (window.supabase && window.supabase.createClient) ? window.supabase.createClient(SB_URL, SB_KEY) : null;
+let ME = null;
+function escH(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+async function loadRemotePrices(){
+  if (!sb) return;
+  const r = await sb.from('prices').select('*').eq('active', true).order('cp');
+  if (r.error || !r.data || !r.data.length) return;
+  CP_LIST.length = 0;
+  r.data.forEach(function(x){ CP_LIST.push({cp:x.cp, price:x.price, tag:x.tag||'', discount:x.discount||0}); });
+  renderCP();
+}
+async function loadRemoteOffers(){
+  if (!sb) return;
+  const r = await sb.from('offers').select('*').eq('active', true).order('id');
+  const box = document.getElementById('offersGrid');
+  const sec = document.getElementById('offersSec');
+  if (!box || !sec) return;
+  if (!r.data || !r.data.length){ sec.style.display = 'none'; return; }
+  box.innerHTML = r.data.map(function(o){
+    return '<div class="card"><b>' + escH(o.title) + '</b><small>' + escH(o.description||'') + '</small>' +
+      (o.price ? '<div class="price">' + fmtNum(o.price) + ' تومان</div>' : '') + '</div>';
+  }).join('');
+}
+function startPresence(){
+  const beat = function(){ if (ME && sb) sb.from('presence').upsert({ id: ME, last_seen: new Date().toISOString() }); };
+  beat(); setInterval(beat, 30000);
+}
+async function loadLive(){
+  if (!sb || !ME) return;
+  const r = await sb.from('messages').select('sender,body,created_at').eq('chat_id', ME).order('created_at');
+  const box = document.getElementById('liveMsgs');
+  box.innerHTML = (r.data||[]).map(function(m){
+    return '<div class="b ' + (m.sender === 'customer' ? 'u' : '') + '">' + escH(m.body) + '</div>';
+  }).join('');
+  box.scrollTop = 1e9;
+}
+async function initBackend(){
+  const box = document.getElementById('liveMsgs');
+  if (!sb){ box.innerHTML = '<p class="note">چت الان در دسترس نیست. از بخش تیکت استفاده کن.</p>'; return; }
+  try{
+    const s = await sb.auth.getSession();
+    let user = s.data && s.data.session ? s.data.session.user : null;
+    if (!user){ const r = await sb.auth.signInWithAnonymously(); user = r.data ? r.data.user : null; }
+    ME = user ? user.id : null;
+  }catch(e){ ME = null; }
+  loadRemotePrices(); loadRemoteOffers();
+  if (ME){
+    startPresence(); loadLive();
+    sb.channel('live-chat').on('postgres_changes', {event:'INSERT', schema:'public', table:'messages', filter:'chat_id=eq.' + ME}, function(){ loadLive(); }).subscribe();
+  }
+}
+document.getElementById('liveBtn').onclick = function(){ window.open('https://t.me/Is_Pourhossine','_blank'); };
+document.getElementById('liveClose').onclick = function(){ document.getElementById('liveWin').classList.remove('open'); };
+document.getElementById('liveSend').onclick = async function(){
+  const inp = document.getElementById('liveIn');
+  const v = inp.value.trim();
+  if (!v || !ME || !sb) return;
+  inp.value = '';
+  await sb.from('messages').insert({ chat_id: ME, sender: 'customer', body: v });
+  loadLive();
+};
+document.getElementById('liveIn').addEventListener('keydown', function(e){ if (e.key === 'Enter') document.getElementById('liveSend').click(); });
+initBackend();
+
+/* ---------- جرقه و فلش برق ---------- */
+function flashNow(){
+  var f=document.getElementById('flash'); if(!f) return;
+  f.classList.add('on'); setTimeout(function(){ f.classList.remove('on'); },90);
+  setTimeout(function(){ f.classList.add('on'); setTimeout(function(){ f.classList.remove('on'); },60); },170);
+}
+function sparks(x,y){
+  for(var i=0;i<16;i++){
+    var el=document.createElement('span'); el.className='spark';
+    el.style.left=x+'px'; el.style.top=y+'px';
+    document.body.appendChild(el);
+    var a=(Math.PI*2)*(i/16)+Math.random()*0.4, d=60+Math.random()*90;
+    el.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:'translate('+Math.cos(a)*d+'px,'+Math.sin(a)*d+'px) scale(.2)',opacity:0}],{duration:600+Math.random()*300,easing:'ease-out'});
+    setTimeout((function(n){ return function(){ n.remove(); }; })(el),950);
+  }
+}
+setInterval(function(){ if(Math.random()<.5) flashNow(); },7000);
+
+(function(){
+  var f=document.getElementById('ticketForm2'); if(!f) return;
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=document.getElementById('ok-ticket2');
+    var body=new URLSearchParams(new FormData(f)).toString();
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body}).then(function(){
+      ok.style.color='#22c55e'; ok.textContent='پیامت ثبت شد. به‌زودی جواب میدیم.'; f.reset();
+    }).catch(function(){ ok.style.color='#ef4444'; ok.textContent='ارسال نشد، اینترنت رو چک کن.'; });
+  });
+})();
+
+/* برف و سکه */
+(function(){
+  var box=document.getElementById('snow');
+  var chars=['❄','❅','❆','•'];
+  for(var i=0;i<70;i++){
+    var f=document.createElement('span');
+    f.className='flake';
+    f.textContent=chars[i%chars.length];
+    f.style.left=(Math.random()*100)+'%';
+    f.style.fontSize=(8+Math.random()*16)+'px';
+    f.style.animationDuration=(8+Math.random()*12)+'s';
+    f.style.animationDelay=(-Math.random()*20)+'s';
+    box.appendChild(f);
+  }
+  var coin=document.getElementById('coin');
+  if(coin){
+    coin.onclick=function(){
+      coin.classList.remove('zap'); void coin.offsetWidth; coin.classList.add('zap');
+      flashNow();
+      var r=coin.getBoundingClientRect(); sparks(r.left+r.width/2, r.top+r.height/2);
+      setTimeout(function(){ coin.classList.remove('zap'); },500);
+    };
+  }
+})();
+</script>
+</body>
+</html>
