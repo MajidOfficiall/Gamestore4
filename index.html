@@ -1101,5 +1101,13 @@ setInterval(function(){ if(Math.random()<.5) flashNow(); },7000);
   }
 })();
 </script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+(function(){
+  if (!window.netlifyIdentity) return;
+  netlifyIdentity.on('login', function(){ location.href = '/admin.html'; });
+  netlifyIdentity.init();
+})();
+</script>
 </body>
 </html>
